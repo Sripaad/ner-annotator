@@ -1,0 +1,21 @@
+version: "3"
+   
+services:
+  ner_node:
+    build: 
+      context: .
+      dockerfile: deploy_node.Dockerfile
+    container_name: ner_python_container
+    ports:
+      - "8888:8080"
+    volumes: 
+        - ./ui:/app
+        - /app/node_modules
+
+  ner_python:
+    build: 
+      context: .
+      dockerfile: deploy_python.Dockerfile
+    container_name: ner_node_container
+    volumes:
+        - ./annotator:/app
