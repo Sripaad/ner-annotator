@@ -5,9 +5,9 @@ services:
     build: 
       context: .
       dockerfile: deploy_node.Dockerfile
-    container_name: ner_python_container
+    container_name: ner_node_container
     ports:
-      - "8888:8080"
+      - "8080:8080"
     volumes: 
         - ./ui:/app
         - /app/node_modules
@@ -16,6 +16,6 @@ services:
     build: 
       context: .
       dockerfile: deploy_python.Dockerfile
-    container_name: ner_node_container
+    container_name: ner_python_container
     volumes:
         - ./annotator:/app
