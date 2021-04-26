@@ -3,7 +3,8 @@ import nltk
 from flask import Flask, request
 from flask_cors import cross_origin
 
-from nltk.tokenize.treebank import TreebankWordTokenizer, TreebankWordDetokenizer
+from nltk.tokenize.treebank import TreebankWordTokenizer
+from nltk.tokenize.treebank import TreebankWordDetokenizer
 
 app = Flask(__name__)
 
@@ -25,7 +26,6 @@ def tokenize():
 def detokenize():
     tokens = request.json["tokens"]
     return {"text": TreebankWordDetokenizer().detokenize(tokens)}
-
 
 
 if __name__ == "__main__":

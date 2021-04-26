@@ -1,7 +1,7 @@
 version: "3"
    
 services:
-  ner_node:
+  ner-node:
     build: 
       context: .
       dockerfile: deploy_node.Dockerfile
@@ -12,7 +12,7 @@ services:
         - ./ui:/app
         - /app/node_modules
 
-  ner_python:
+  ner-python:
     build: 
       context: .
       dockerfile: deploy_python.Dockerfile
