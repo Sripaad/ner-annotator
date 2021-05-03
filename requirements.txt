@@ -1,3 +1,4 @@
+aitextgen
 blis==0.7.4
 catalogue==2.0.3
 certifi==2020.12.5
@@ -31,6 +32,7 @@ srsly==2.4.1
 starlette==0.13.6
 thinc==8.0.3
 tqdm==4.51.0
+transformers
 typer==0.3.2
 urllib3==1.26.4
 uvicorn==0.13.4

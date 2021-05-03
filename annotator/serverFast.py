@@ -7,6 +7,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from nltk.tokenize.treebank import TreebankWordTokenizer
 from nltk.tokenize.treebank import TreebankWordDetokenizer
 
+from aitextgen import aitextgen
+from transformers import pipeline
+
+
+classifier = pipeline("zero-shot-classification",
+                      model="facebook/bart-large-mnli")
+ai = aitextgen()
 app = FastAPI()
 
 origins = ["*"]
@@ -20,12 +27,12 @@ app.add_middleware(
 )
 
 
-@app.get('/')
+@app.get('/api')
 async def index():
     return {'message': 'Hello World!'}
 
 
-@app.post('/tokenize')
+@app.post('/api/tokenize')
 async def tokenize(request: Request):
     body = await request.json()
     text = body["text"]
@@ -38,8 +45,45 @@ async def tokenize(request: Request):
     return {"tokens": [(s[0], s[1], text[s[0]:s[1]]) for s in spans]}
 
 
-@app.post('/detokenize')
+@app.post('/api/detokenize')
 async def detokenize(request: Request):
     body = await request.json()
     tokens = body["tokens"]
     return {"text": TreebankWordDetokenizer().detokenize(tokens)}
+
+
+@app.post('/api/generate')
+async def generate(request: Request):
+    body = await request.json()
+    prompt_text = body["prompt_text"]
+    generated_text = ai.generate_one(prompt=prompt_text, max_length=100)
+    return {
+        "generated_text": generated_text
+    }
+
+
+@app.post('/api/classify')
+async def classify(request: Request):
+    body = await request.json()
+    sentence = body["sentence"]
+    labels = [
+        "Happy",
+        "Enthusiasm",
+        "Discontentment",
+        "Frustration",
+        "Gratitude",
+        "Trust",
+        "Confusion",
+        "Neutral"
+        ]
+    data = classifier(sentence, labels, multi_label=True)
+    emotions = dict(zip(data['labels'], data['scores']))
+    confidence = max(emotions.values())
+    for k, v in emotions.items():
+        if v == confidence:
+            emotion = k
+    return{
+        "Highest_emotion": emotion,
+        "Confidence": confidence,
+        "Emotions": emotions
+    }
