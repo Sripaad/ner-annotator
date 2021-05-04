@@ -19,3 +19,5 @@ services:
     container_name: ner_python_container
     volumes:
         - ./annotator:/app
+    ports: 
+      - "5555:5555"

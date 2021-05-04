@@ -93,7 +93,7 @@ export default {
       }
       this.currentSentence = this.inputSentences[this.currentIndex];
       axios
-        .post("/tokenize", this.currentSentence)
+        .post("/api/tokenize", this.currentSentence)
         .then((res) => {
           this.tm = new TokenManager(res.data.tokens);
         })
@@ -143,7 +143,7 @@ export default {
     },
     saveTags() {
       axios
-        .post("/detokenize", { tokens: this.tm.words })
+        .post("/api/detokenize", { tokens: this.tm.words })
         .then((res) => {
           this.$store.commit("addAnnotation", [
             res.data.text,

@@ -1,18 +1,20 @@
-import nltk
+try:
+    import nltk
+    from fastapi import Request
+    from fastapi import FastAPI
+    from fastapi.middleware.cors import CORSMiddleware
+    from nltk.tokenize.treebank import TreebankWordTokenizer
+    from nltk.tokenize.treebank import TreebankWordDetokenizer
+    from aitextgen import aitextgen
+    from transformers import pipeline
 
-from fastapi import FastAPI
-from fastapi import Request
-from fastapi.middleware.cors import CORSMiddleware
-
-from nltk.tokenize.treebank import TreebankWordTokenizer
-from nltk.tokenize.treebank import TreebankWordDetokenizer
-
-from aitextgen import aitextgen
-from transformers import pipeline
+except Exception as e:
+    print("Some modules could not be imported {}".format(e))
 
 
 classifier = pipeline("zero-shot-classification",
                       model="facebook/bart-large-mnli")
+generator = pipeline('text-generation', model='gpt2')
 ai = aitextgen()
 app = FastAPI()
 
@@ -52,8 +54,8 @@ async def detokenize(request: Request):
     return {"text": TreebankWordDetokenizer().detokenize(tokens)}
 
 
-@app.post('/api/generate')
-async def generate(request: Request):
+@app.post('/api/generator')
+async def generatorTextgen(request: Request):
     body = await request.json()
     prompt_text = body["prompt_text"]
     generated_text = ai.generate_one(prompt=prompt_text, max_length=100)
@@ -86,4 +88,18 @@ async def classify(request: Request):
         "Highest_emotion": emotion,
         "Confidence": confidence,
         "Emotions": emotions
+    }
+
+
+@app.post('/api/generator/gpt2')
+async def generatorGpt2(request: Request):
+    body = await request.json()
+    prompt_text = body["prompt_text"]
+    generated_text = generator(
+        prompt_text,
+        max_length=100,
+        num_return_sequences=1
+        )
+    return {
+        "generated_text_gpt2": generated_text
     }
