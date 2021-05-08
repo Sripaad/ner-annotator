@@ -52,12 +52,16 @@ export const mutations = {
     const sentences = state.originalText.split(state.separator);
     state.inputSentences = sentences.map((s, i) => ({ id: i, text: s }));
   },
+  setCurrentPage(state, payload) {
+    state.currentPage = payload;
+  },
 };
 
 export const getters = {};
 export default {
   state() {
     return {
+      currentPage: "",
       originalText: "",
       separator: "\n",
       classes: [],

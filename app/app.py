@@ -54,7 +54,7 @@ async def detokenize(request: Request):
     return {"text": TreebankWordDetokenizer().detokenize(tokens)}
 
 
-@app.post('/api/generator')
+@app.post('/api/generate')
 async def generatorTextgen(request: Request):
     body = await request.json()
     prompt_text = body["prompt_text"]
@@ -91,7 +91,7 @@ async def classify(request: Request):
     }
 
 
-@app.post('/api/generator/gpt2')
+@app.post('/api/generate/gpt2')
 async def generatorGpt2(request: Request):
     body = await request.json()
     prompt_text = body["prompt_text"]
