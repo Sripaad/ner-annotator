@@ -7,6 +7,7 @@ try:
     from nltk.tokenize.treebank import TreebankWordDetokenizer
     from aitextgen import aitextgen
     from transformers import pipeline
+    import uvicorn
 
 except Exception as e:
     print("Some modules could not be imported {}".format(e))
@@ -95,11 +96,16 @@ async def classify(request: Request):
 async def generatorGpt2(request: Request):
     body = await request.json()
     prompt_text = body["prompt_text"]
-    generated_text = generator(
+    text = generator(
         prompt_text,
         max_length=100,
         num_return_sequences=1
         )
+    generated_text = text[0]["generated_text"]
     return {
-        "generated_text_gpt2": generated_text
+        "generated_text": generated_text
     }
+
+
+if __name__ == '__main__':
+    uvicorn.run(app, host="0.0.0.0", port=5555, reload=True)  # workers=4

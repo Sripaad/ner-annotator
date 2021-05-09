@@ -45,7 +45,7 @@
       <div class="container">
         <div class="columns">
           <div class="column">
-            <button class="button is-danger is-outlined" @click="renderGenerationpage">generation page </button>
+            <button class="button is-danger is-outlined" @click="renderGenerationpage"> Click Here to Generate Text </button>
             <!-- <LoadTextFile class="pt-6" v-on:file-loaded="this.$emit('file-loaded');" /> -->
           </div>
           <div class="column">
@@ -78,7 +78,7 @@
       <div class="container">
         <div class="columns">
           <div class="column">
-          <button class="button is-danger is-outlined" @click="renderClassificationpage">classification page</button>
+          <button class="button is-danger is-outlined" @click="renderClassificationpage"> Click Here to Classify Text</button>
             <!-- <LoadTextFile class="pt-6" v-on:file-loaded="this.$emit('file-loaded');" /> -->
           </div>
           <div class="column">

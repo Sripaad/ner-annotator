@@ -6,10 +6,19 @@
     >
       Back
     </button>
-    <br />
-    <h1>Text classification page</h1>
-
-    <br />
+    <br>
+    <br>
+    <section class="hero is-dark">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Text Classification</h1>
+          <h2 class="subtitle">Classify emotions present in text.</h2>
+        </div>
+      </div>
+    </section> 
+    <br>
+    <br>
+    <br>
     <div class="input-area">
       <textarea class="textarea" v-model="sentence" placeholder="Prompt text" />
 
@@ -20,7 +29,9 @@
         disabled
       />
     </div>
-
+    <br>
+    <br>
+    <br>
     <div class="input-area mt">
       <button class="button is-danger is-outlined" @click="resetBlocks">
         Reset
@@ -51,7 +62,7 @@ export default {
   },
   methods: {
     saveTags() {
-      this.tags.push(this.classificationData);
+      this.tags.push({sentence: this.sentence, classificationData: this.classificationData});
       console.log(this.tags);
     },
 

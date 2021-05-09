@@ -6,11 +6,21 @@
     >
       Back
     </button>
-    <br />
-    <h1>Sequence Generation Page</h1>
-
-    <br />
-
+    <br>
+    <br>
+    <br>
+    <section class="hero is-dark">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Text Generation</h1>
+          <h2 class="subtitle">Generate Sequence of text.</h2>
+        </div>
+      </div>
+    </section>  
+    <br>
+    <br>
+    <br>
+    <br>
     <div class="input-area">
       <textarea
         class="textarea"
@@ -24,7 +34,10 @@
         disabled
       />
     </div>
-
+    <br>
+    <br>
+    <br>
+    <br>
     <div class="input-area mt">
       <button class="button is-danger is-outlined" @click="resetBlocks">
         Reset
@@ -55,7 +68,7 @@ export default {
   },
   methods: {
     saveTags() {
-      this.tags.push(this.generated_sequence);
+      this.tags.push({prompt_text: this.prompt_text, generated_text: this.generated_text})
       console.log(this.tags);
     },
 
